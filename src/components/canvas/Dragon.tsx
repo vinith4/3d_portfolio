@@ -35,20 +35,9 @@ const Dragon = ({ isMobile }: DragonProps) => {
 
 
 
-    // Omit static or sleeping animations by index.
-    // Add indexes to this array to exclude them from playback.
-    const omitAnimationIndices: number[] = [0, 1, 2, 11, 12];
-
-    const actionKeys = Object.keys(actions);
-    const allowedActionKeys = actionKeys.filter(
-      (_, index) => !omitAnimationIndices.includes(index),
-    );
-
-    const selectionKeys =
-      allowedActionKeys.length > 0 ? allowedActionKeys : actionKeys;
-    const randomActionKey =
-      selectionKeys[Math.floor(Math.random() * selectionKeys.length)];
-    const action = actions[randomActionKey];
+    const targetAnimationName =
+      "Armature|Armature|mo_0077_btl_0400|Base Layer";
+    const action = actions[targetAnimationName];
 
     action?.reset().setLoop(THREE.LoopRepeat, Infinity).fadeIn(0.5).play();
 
