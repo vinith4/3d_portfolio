@@ -17,7 +17,6 @@ interface DragonProps {
   isMobile: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Dragon = ({ isMobile }: DragonProps) => {
   const group = useRef<THREE.Group>(null);
 
@@ -26,45 +25,37 @@ const Dragon = ({ isMobile }: DragonProps) => {
   const { actions } = useAnimations(animations, group);
 
   useEffect(() => {
-  // Enable shadows for every mesh
-  scene.traverse((child) => {
-    if (child instanceof THREE.Mesh) {
-      child.castShadow = true;
-      child.receiveShadow = true;
-    }
-  });
+    // Enable shadows for every mesh
+    scene.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
 
-  // Animation indexes to skip
-  const omitAnimationIndices = [0, 1, 2, 11, 12];
 
-  // Get only the allowed animation clips
-  const availableAnimations = animations.filter(
-    (_, index) => !omitAnimationIndices.includes(index)
-  );
 
-  // Fallback if all animations are filtered out
-  const animationPool =
-    availableAnimations.length > 0 ? availableAnimations : animations;
+    // Omit static or sleeping animations by index.
+    // Add indexes to this array to exclude them from playback.
+    const omitAnimationIndices: number[] = [0, 1, 2, 11, 12];
 
-  // Select a random animation
-  const randomClip =
-    animationPool[Math.floor(Math.random() * animationPool.length)];
+    const actionKeys = Object.keys(actions);
+    const allowedActionKeys = actionKeys.filter(
+      (_, index) => !omitAnimationIndices.includes(index),
+    );
 
-  // Get the corresponding action
-  const action = actions[randomClip.name];
+    const selectionKeys =
+      allowedActionKeys.length > 0 ? allowedActionKeys : actionKeys;
+    const randomActionKey =
+      selectionKeys[Math.floor(Math.random() * selectionKeys.length)];
+    const action = actions[randomActionKey];
 
-  if (action) {
-    action
-      .reset()
-      .setLoop(THREE.LoopRepeat, Infinity)
-      .fadeIn(0.5)
-      .play();
-  }
+    action?.reset().setLoop(THREE.LoopRepeat, Infinity).fadeIn(0.5).play();
 
-  return () => {
-    action?.fadeOut(0.5);
-  };
-}, [actions, animations, scene]);
+    return () => {
+      action?.fadeOut(0.5);
+    };
+  }, [actions, scene]);
 
   return (
     <>
@@ -156,7 +147,6 @@ const Dragon = ({ isMobile }: DragonProps) => {
 };
 
 const DragonCanvas = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -204,7 +194,7 @@ const DragonCanvas = () => {
           maxPolarAngle={Math.PI / 1.7}
         />
 
-        {/* <Dragon isMobile={isMobile} /> */}
+        <Dragon isMobile={isMobile} />
       </Suspense>
 
       <Preload all />
