@@ -202,7 +202,7 @@ const DragonCanvas = () => {
           maxPolarAngle={Math.PI / 1.7}
         />
 
-        <Dragon isMobile={isMobile} />
+        {/* <Dragon isMobile={isMobile} /> */}
       </Suspense>
 
       <Preload all />
