@@ -25,25 +25,45 @@ const Dragon = ({ isMobile }: DragonProps) => {
   const { actions } = useAnimations(animations, group);
 
   useEffect(() => {
-    // Enable shadows for every mesh
-    scene.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
-    });
+  // Enable shadows for every mesh
+  scene.traverse((child) => {
+    if (child instanceof THREE.Mesh) {
+      child.castShadow = true;
+      child.receiveShadow = true;
+    }
+  });
 
-    // Pick a random animation clip each load
-    const actionKeys = Object.keys(actions);
-    const randomActionKey = actionKeys[Math.floor(Math.random() * actionKeys.length)];
-    const action = actions[randomActionKey];
+  // Animation indexes to skip
+  const omitAnimationIndices = [0, 1, 2, 11, 12];
 
-    action?.reset().setLoop(THREE.LoopRepeat, Infinity).fadeIn(0.5).play();
+  // Get only the allowed animation clips
+  const availableAnimations = animations.filter(
+    (_, index) => !omitAnimationIndices.includes(index)
+  );
 
-    return () => {
-      action?.fadeOut(0.5);
-    };
-  }, [actions, scene]);
+  // Fallback if all animations are filtered out
+  const animationPool =
+    availableAnimations.length > 0 ? availableAnimations : animations;
+
+  // Select a random animation
+  const randomClip =
+    animationPool[Math.floor(Math.random() * animationPool.length)];
+
+  // Get the corresponding action
+  const action = actions[randomClip.name];
+
+  if (action) {
+    action
+      .reset()
+      .setLoop(THREE.LoopRepeat, Infinity)
+      .fadeIn(0.5)
+      .play();
+  }
+
+  return () => {
+    action?.fadeOut(0.5);
+  };
+}, [actions, animations, scene]);
 
   return (
     <>
@@ -173,9 +193,13 @@ const DragonCanvas = () => {
           autoRotate
           autoRotateSpeed={0.5}
           enableZoom
-          enablePan
-          minPolarAngle={0}
-          maxPolarAngle={Math.PI}
+          enablePan={false}
+          enableDamping
+          dampingFactor={0.08}
+          minDistance={7}
+          maxDistance={9}
+          minPolarAngle={Math.PI / 3}
+          maxPolarAngle={Math.PI / 1.7}
         />
 
         <Dragon isMobile={isMobile} />

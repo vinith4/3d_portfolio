@@ -1,3 +1,4 @@
+import { FaEnvelope, FaFileDownload, FaGithub } from "react-icons/fa";
 import {
   mobile,
   backend,
@@ -24,8 +25,13 @@ import {
   tripguide,
   threejs,
 } from "../assets";
+import { FaLinkedin } from "react-icons/fa6";
 
 export const navLinks = [
+  {
+    id: "home",
+    title: "Home",
+  },
   {
     id: "about",
     title: "About",
@@ -42,20 +48,20 @@ export const navLinks = [
 
 const services = [
   {
-    title: "Web Developer",
+    title: "Frontend Development",
     icon: web,
   },
   {
-    title: "React Native Developer",
-    icon: mobile,
-  },
-  {
-    title: "Backend Developer",
+    title: "Backend Development",
     icon: backend,
   },
   {
-    title: "Content Creator",
+    title: "Interactive 3D Web",
     icon: creator,
+  },
+  {
+    title: "AI-Powered Solutions",
+    icon: mobile,
   },
 ];
 
@@ -262,4 +268,35 @@ const projects = [
   },
 ];
 
-export { services, technologies, experiences, testimonials, projects };
+const socials = [
+  {
+    title: "GitHub",
+    subtitle: "Explore my latest open-source projects",
+    action: "Explore",
+    icon: FaGithub,
+    href: "https://github.com/vinith4",
+  },
+  {
+    title: "LinkedIn",
+    subtitle: "Let's connect and grow together",
+    action: "Connect",
+    icon: FaLinkedin,
+    href: "https://www.linkedin.com/in/vinithkumar27/",
+  },
+  {
+    title: "Resume",
+    subtitle: "Download my latest resume",
+    action: "Download",
+    icon: FaFileDownload,
+    href: "/resume.pdf",
+  },
+  {
+    title: "Email",
+    subtitle: "Reach out to me directly anytime",
+    action: "Send Mail",
+    icon: FaEnvelope,
+    href: "https://mail.google.com/mail/u/0/?view=cm&fs=1&to=vinith9047kumar@gmail.com",
+  },
+];
+
+export { services, technologies, experiences, testimonials, projects, socials };
