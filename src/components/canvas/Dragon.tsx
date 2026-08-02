@@ -33,11 +33,10 @@ const Dragon = ({ isMobile }: DragonProps) => {
       }
     });
 
-
-
-    const targetAnimationName =
-      "Armature|Armature|mo_0077_btl_0400|Base Layer";
-    const action = actions[targetAnimationName];
+    // Pick a random animation clip each load
+    const actionKeys = Object.keys(actions);
+    const randomActionKey = actionKeys[Math.floor(Math.random() * actionKeys.length)];
+    const action = actions[randomActionKey];
 
     action?.reset().setLoop(THREE.LoopRepeat, Infinity).fadeIn(0.5).play();
 
@@ -174,13 +173,9 @@ const DragonCanvas = () => {
           autoRotate
           autoRotateSpeed={0.5}
           enableZoom
-          enablePan={false}
-          enableDamping
-          dampingFactor={0.08}
-          minDistance={7}
-          maxDistance={9}
-          minPolarAngle={Math.PI / 3}
-          maxPolarAngle={Math.PI / 1.7}
+          enablePan
+          minPolarAngle={0}
+          maxPolarAngle={Math.PI}
         />
 
         <Dragon isMobile={isMobile} />
