@@ -4,7 +4,6 @@ import {
   Hero,
   About,
   Experience,
-  Tech,
   Works,
   Contact,
   Footer,
