@@ -17,6 +17,7 @@ interface DragonProps {
   isMobile: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Dragon = ({ isMobile }: DragonProps) => {
   const group = useRef<THREE.Group>(null);
 
@@ -155,6 +156,7 @@ const Dragon = ({ isMobile }: DragonProps) => {
 };
 
 const DragonCanvas = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
