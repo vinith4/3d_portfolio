@@ -52,6 +52,7 @@ const Footer = () => {
               >
                 <motion.a
                   href={item.href}
+                  download={item.title === "Resume"}
                   target="_blank"
                   rel="noopener noreferrer"
                   variants={fadeIn("up", "spring", index * 0.2, 0.75)}

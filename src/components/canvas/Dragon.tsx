@@ -33,11 +33,27 @@ const Dragon = ({ isMobile }: DragonProps) => {
       }
     });
 
+    // Animations to exclude
+    const excludedAnimations = [
+      "Armature|Armature|mo_0077_anim_0001|Base Layer",
+      "Armature|Armature|mo_0077_anim_9001|Base Layer",
+      "Armature|Armature|mo_0077_btl_0005|Base Layer",
+      "Armature|Armature|mo_0077_btl_2201|Base Layer",
+      "Armature|Armature|mo_0077_btl_2202|Base Layer",
+    ];
 
+    // Get all playable animations
+    const availableAnimations = Object.keys(actions).filter(
+      (name) => !excludedAnimations.includes(name),
+    );
 
-    const targetAnimationName =
-      "Armature|Armature|mo_0077_btl_0400|Base Layer";
-    const action = actions[targetAnimationName];
+    // Pick a random animation
+    const randomAnimation =
+      availableAnimations[
+        Math.floor(Math.random() * availableAnimations.length)
+      ];
+
+    const action = actions[randomAnimation];
 
     action?.reset().setLoop(THREE.LoopRepeat, Infinity).fadeIn(0.5).play();
 

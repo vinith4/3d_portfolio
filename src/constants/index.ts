@@ -1,4 +1,5 @@
 import { FaEnvelope, FaFileDownload, FaGithub } from "react-icons/fa";
+import resumeFile from "../assets/resume/Vinithkumar.pdf";
 import {
   mobile,
   backend,
@@ -278,7 +279,7 @@ const socials = [
     subtitle: "Download my latest resume",
     action: "Download",
     icon: FaFileDownload,
-    href: "/resume.pdf",
+    href: resumeFile,
   },
   {
     title: "Email",
