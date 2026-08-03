@@ -37,7 +37,7 @@ const Hero = () => {
       <DragonCanvas />
 
       {/* Scroll Indicator */}
-      <div className="absolute xs:bottom-4 bottom-8 w-full flex justify-center items-center">
+      <div className="absolute xs:bottom-8 bottom-12 w-full flex justify-center items-center">
         <a
           href="#about"
           className="flex items-center justify-center w-[40px] h-[60px] cursor-pointer"

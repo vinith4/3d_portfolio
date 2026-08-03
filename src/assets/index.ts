@@ -14,18 +14,27 @@ import figma from "./tech/figma.png";
 import git from "./tech/git.png";
 import html from "./tech/html.png";
 import javascript from "./tech/javascript.png";
+import java from "./tech/java.svg";
+import jest from "./tech/jest.png";
 import mongodb from "./tech/mongodb.png";
+import mysql from "./tech/mysql.png";
+import nextjs from "./tech/nextjs.svg";
 import nodejs from "./tech/nodejs.png";
+import python from "./tech/python.svg";
 import reactjs from "./tech/reactjs.png";
 import redux from "./tech/redux.png";
+import springboot from "./tech/springboot.svg";
+import storybook from "./tech/storybook.png";
 import tailwind from "./tech/tailwind.png";
 import typescript from "./tech/typescript.png";
 import threejs from "./tech/threejs.svg";
+import vitest from "./tech/vitest.svg";
 
 import meta from "./company/meta.png";
 import shopify from "./company/shopify.png";
 import starbucks from "./company/starbucks.png";
 import tesla from "./company/tesla.png";
+import virtusa from "./company/virtusa.png";
 
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
@@ -46,13 +55,21 @@ export {
   git,
   html,
   javascript,
+  java,
+  jest,
   mongodb,
+  mysql,
+  nextjs,
   nodejs,
+  python,
   reactjs,
   redux,
+  springboot,
+  storybook,
   tailwind,
   typescript,
   threejs,
+  vitest,
   meta,
   shopify,
   starbucks,
@@ -61,4 +78,5 @@ export {
   jobit,
   tripguide,
   vinithkumar,
+  virtusa,
 };

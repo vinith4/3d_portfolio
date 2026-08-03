@@ -115,7 +115,7 @@ const Dragon = ({ isMobile }: DragonProps) => {
         <primitive
           object={scene}
           scale={isMobile ? 0.35 : 0.5}
-          position={isMobile ? [0, -2.1, 0] : [0, -2.4, 0]}
+          position={isMobile ? [0, -1.7, 0] : [0, -2.4, 0]}
           rotation={[0, Math.PI / 4, 0]}
         />
       </group>

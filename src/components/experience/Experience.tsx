@@ -11,11 +11,10 @@ import SectionWrapper from "../../hoc/SectionWapper";
 import { styles } from "../../styles";
 import { textVariant } from "../../utils/motion";
 
-
-
 interface Experience {
   title: string;
   company_name: string;
+  client: string;
   icon: string;
   iconBg: string;
   date: string;
@@ -54,6 +53,13 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
           style={{ margin: 0 }}
         >
           {experience.company_name}
+        </p>
+        <p
+          className="mt-1 text-[14px] font-medium text-[#915EFF]"
+          style={{ margin: 0 }}
+        >
+          Client:{" "}
+          <span className="text-white font-semibold">{experience.client}</span>
         </p>
       </div>
 

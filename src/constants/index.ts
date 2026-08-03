@@ -12,18 +12,21 @@ import {
   redux,
   tailwind,
   nodejs,
-  mongodb,
   git,
   figma,
-  docker,
-  meta,
-  starbucks,
-  tesla,
-  shopify,
   carrent,
   jobit,
   tripguide,
   threejs,
+  mysql,
+  java,
+  jest,
+  nextjs,
+  python,
+  springboot,
+  storybook,
+  vitest,
+  virtusa,
 } from "../assets";
 import { FaLinkedin } from "react-icons/fa6";
 
@@ -87,6 +90,10 @@ const technologies = [
     icon: reactjs,
   },
   {
+    name: "Next.js",
+    icon: nextjs,
+  },
+  {
     name: "Redux Toolkit",
     icon: redux,
   },
@@ -95,110 +102,93 @@ const technologies = [
     icon: tailwind,
   },
   {
-    name: "Node JS",
-    icon: nodejs,
-  },
-  {
-    name: "MongoDB",
-    icon: mongodb,
-  },
-  {
-    name: "Three JS",
+    name: "Three.js",
     icon: threejs,
   },
   {
-    name: "git",
+    name: "Node.js",
+    icon: nodejs,
+  },
+  {
+    name: "Java",
+    icon: java,
+  },
+  {
+    name: "Spring Boot",
+    icon: springboot,
+  },
+  {
+    name: "Python",
+    icon: python,
+  },
+  {
+    name: "MySQL",
+    icon: mysql,
+  },
+  {
+    name: "Git",
     icon: git,
   },
   {
-    name: "figma",
+    name: "Figma",
     icon: figma,
   },
   {
-    name: "docker",
-    icon: docker,
+    name: "Storybook",
+    icon: storybook,
+  },
+  {
+    name: "Jest",
+    icon: jest,
+  },
+  {
+    name: "Vitest",
+    icon: vitest,
   },
 ];
 
 const experiences = [
   {
-    title: "React.js Developer",
-    company_name: "Starbucks",
-    icon: starbucks,
-    iconBg: "#383E56",
-    date: "March 2020 - April 2021",
-    points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
-    ],
-  },
-  {
-    title: "React Native Developer",
-    company_name: "Tesla",
-    icon: tesla,
+    title: "Engineer",
+    company_name: "Virtusa Consulting Services Pvt. Ltd.",
+    client: "BMO",
+    icon: virtusa,
     iconBg: "#E6DEDD",
-    date: "Jan 2021 - Feb 2022",
+    date: "Jan 2026 - Present",
     points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
+      "Developing enterprise-grade applications using React.js, TypeScript, AG Grid, and React Hook Form.",
+      "Built reusable UI components with the Carbon Design System and documented them using Storybook.",
+      "Integrated AMPS messaging services and optimized real-time data grids with advanced filtering, sorting, and server-side data loading.",
+      "Implemented unit and integration tests using Vitest, Jest, and Playwright to improve application quality and maintainability.",
     ],
   },
   {
-    title: "Web Developer",
-    company_name: "Shopify",
-    icon: shopify,
+    title: "Associate Engineer",
+    company_name: "Virtusa Consulting Services Pvt. Ltd.",
+    client: "Lighthouse Credit Union",
+    icon: virtusa,
     iconBg: "#383E56",
-    date: "Jan 2022 - Jan 2023",
+    date: "Jan 2024 - Dec 2025",
     points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
+      "Developed enterprise web applications using React.js, Next.js, TypeScript, and Tailwind CSS.",
+      "Built responsive mortgage and loan management modules with reusable UI components.",
+      "Integrated REST APIs and Auth0 authentication to deliver secure user experiences.",
+      "Collaborated with cross-functional teams in Agile sprints while following clean coding practices.",
     ],
   },
   {
-    title: "Full stack Developer",
-    company_name: "Meta",
-    icon: meta,
+    title: "Java Full Stack Intern",
+    company_name: "Virtusa Consulting Services Pvt. Ltd.",
+    client: "Internal Training Project",
+    icon: virtusa,
     iconBg: "#E6DEDD",
-    date: "Jan 2023 - Present",
+    date: "May 2023 - Aug 2023",
     points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
+      "Completed Java Full Stack training covering Java, Spring Boot, React.js, MySQL, and REST APIs.",
+      "Developed a Project Management Portal using React.js, Spring Boot, and MySQL.",
+      "Designed responsive user interfaces and integrated frontend with backend services.",
+      "Worked with Git and Agile methodologies while collaborating with mentors and team members.",
     ],
-  },
-];
-
-const testimonials = [
-  {
-    testimonial:
-      "I thought it was impossible to make a website as beautiful as our product, but Rick proved me wrong.",
-    name: "Sara Lee",
-    designation: "CFO",
-    company: "Acme Co",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
-  },
-  {
-    testimonial:
-      "I've never met a web developer who truly cares about their clients' success like Rick does.",
-    name: "Chris Brown",
-    designation: "COO",
-    company: "DEF Corp",
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
-  },
-  {
-    testimonial:
-      "After Rick optimized our website, our traffic increased by 50%. We can't thank them enough!",
-    name: "Lisa Wang",
-    designation: "CTO",
-    company: "456 Enterprises",
-    image: "https://randomuser.me/api/portraits/women/6.jpg",
   },
 ];
 
@@ -299,4 +289,4 @@ const socials = [
   },
 ];
 
-export { services, technologies, experiences, testimonials, projects, socials };
+export { services, technologies, experiences, projects, socials };

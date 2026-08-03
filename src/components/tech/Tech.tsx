@@ -1,71 +1,59 @@
-import { technologies } from "../../constants";
-import SectionWrapper from "../../hoc/SectionWapper";
-import BallCanvas from "../canvas/Ball";
+/* eslint-disable react-refresh/only-export-components */
+
 import { motion } from "framer-motion";
 
-// eslint-disable-next-line react-refresh/only-export-components
+import { technologies } from "../../constants";
+import SectionWrapper from "../../hoc/SectionWapper";
+
+import DesktopSkillGraph from "./DesktopSkillGraph";
+import MobileTimeline from "./MobileTimeline";
+
 const Tech = () => {
   return (
-    <div className="flex flex-row flex-wrap justify-center gap-10">
-      {technologies.map((technology, index) => (
-        <motion.div
-          key={technology.name}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{
-            delay: index * 0.08,
-            duration: 0.5,
-          }}
-          whileHover={{
-            y: -8,
-          }}
-          className="group flex flex-col items-center"
-        >
-          {/* <div
-            className="
-        rounded-2xl
-        transition-all
-        duration-500
-        group-hover:shadow-[0_0_30px_rgba(145,94,255,0.25)]
-      "
-          > */}
-          <div className="w-28 h-28 transition-transform duration-500 group-hover:scale-110">
-            <BallCanvas icon={technology.icon} />
-            {/* </div> */}
-          </div>
+    <section className="relative w-full overflow-hidden">
+      {/* Background glows removed to show global starfield */}
 
-          <h3
-            className="
-        mt-5
-        text-secondary
-        text-[15px]
-        font-semibold
-        transition-all
-        duration-300
-        group-hover:text-white"
-          >
-            {technology.name}
-          </h3>
+      {/* Heading */}
 
-          {/* Animated Underline */}
-          <div
-            className="
-        mt-2
-        h-[2px]
-        w-0
-        rounded-full
-        bg-gradient-to-r
-        from-[#915EFF]
-        to-[#00CEA8]
-        transition-all
-        duration-500
-        group-hover:w-16
-      "
-          />
-        </motion.div>
-      ))}
-    </div>
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 30,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        viewport={{ once: true }}
+        transition={{
+          duration: 0.6,
+        }}
+        className="text-center"
+      >
+        <p className="text-secondary uppercase tracking-[5px] text-sm">
+          Technologies
+        </p>
+
+        <h2 className="text-white text-5xl font-black mt-4">My Tech Stack</h2>
+
+        <p className="text-secondary mt-6 max-w-3xl mx-auto text-lg leading-8 px-5">
+          Technologies I use to build modern, scalable, high-performance web
+          applications and enterprise solutions.
+        </p>
+      </motion.div>
+
+      {/* Desktop */}
+
+      <div className="hidden lg:block mt-24">
+        <DesktopSkillGraph technologies={technologies} />
+      </div>
+
+      {/* Mobile */}
+
+      <div className="lg:hidden mt-14">
+        <MobileTimeline technologies={technologies} />
+      </div>
+    </section>
   );
 };
 
