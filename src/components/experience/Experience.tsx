@@ -41,6 +41,10 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
           <img
             src={experience.icon}
             alt={experience.company_name}
+            width={48}
+            height={48}
+            loading="lazy"
+            decoding="async"
             className="w-[60%] h-[60%] object-contain"
           />
         </div>

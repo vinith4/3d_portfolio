@@ -4,6 +4,7 @@ import {
   ContactShadows,
   Environment,
   OrbitControls,
+  PerformanceMonitor,
   Preload,
   useAnimations,
   useGLTF,
@@ -12,15 +13,26 @@ import {
 import * as THREE from "three";
 
 import CanvasLoader from "../loader/Loader";
+import { useCanvasVisibility } from "../../utils/useCanvasVisibility";
+import { useIsMobile } from "../../utils/useIsMobile";
 
 interface DragonProps {
   isMobile: boolean;
 }
 
+// Animations to exclude
+const excludedAnimations = [
+  "Armature|Armature|mo_0077_anim_0001|Base Layer",
+  "Armature|Armature|mo_0077_anim_9001|Base Layer",
+  "Armature|Armature|mo_0077_btl_0005|Base Layer",
+  "Armature|Armature|mo_0077_btl_2201|Base Layer",
+  "Armature|Armature|mo_0077_btl_2202|Base Layer",
+];
+
 const Dragon = ({ isMobile }: DragonProps) => {
   const group = useRef<THREE.Group>(null);
 
-  const { scene, animations } = useGLTF("./fatalis/scene.gltf");
+  const { scene, animations } = useGLTF("./fatalis/scene-compressed.glb");
 
   const { actions } = useAnimations(animations, group);
 
@@ -28,20 +40,11 @@ const Dragon = ({ isMobile }: DragonProps) => {
     // Enable shadows for every mesh
     scene.traverse((child) => {
       if (child instanceof THREE.Mesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
+        child.frustumCulled = true;
+        child.castShadow = !isMobile;
+        child.receiveShadow = !isMobile;
       }
     });
-
-    // Animations to exclude
-    const excludedAnimations = [
-      "Armature|Armature|mo_0077_anim_0001|Base Layer",
-      "Armature|Armature|mo_0077_anim_9001|Base Layer",
-      "Armature|Armature|mo_0077_btl_0005|Base Layer",
-      "Armature|Armature|mo_0077_btl_2201|Base Layer",
-      "Armature|Armature|mo_0077_btl_2202|Base Layer",
-    ];
-
     // Get all playable animations
     const availableAnimations = Object.keys(actions).filter(
       (name) => !excludedAnimations.includes(name),
@@ -60,7 +63,9 @@ const Dragon = ({ isMobile }: DragonProps) => {
     return () => {
       action?.fadeOut(0.5);
     };
-  }, [actions, scene]);
+  }, [actions, scene, isMobile]);
+
+  const shadowMapSize = isMobile ? 1024 : 2048;
 
   return (
     <>
@@ -69,62 +74,65 @@ const Dragon = ({ isMobile }: DragonProps) => {
       {/* Adds overall brightness to the whole model            */}
       {/* Increase intensity -> brighter scene                  */}
       {/* ====================================================== */}
-      <ambientLight intensity={0.7} />
+      <ambientLight intensity={isMobile ? 0.85 : 0.7} />
 
       {/* ====================================================== */}
-      {/* 2. Hemisphere Light                                  */}
-      {/* Simulates sky + ground lighting                      */}
+      {/* 2. Hemisphere Light                                   */}
+      {/* Simulates sky + ground lighting                       */}
       {/* ====================================================== */}
       <hemisphereLight groundColor="black" intensity={0.35} />
 
       {/* ====================================================== */}
-      {/* 3. Main Sun Light (Most Important)                   */}
-      {/* Controls overall lighting and shadows                */}
+      {/* 3. Main Sun Light (Most Important)                    */}
+      {/* Controls overall lighting and shadows                 */}
       {/* ====================================================== */}
       <directionalLight
         position={[10, 12, 8]}
         intensity={1.2}
-        castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
+        castShadow={!isMobile}
+        shadow-mapSize-width={shadowMapSize}
+        shadow-mapSize-height={shadowMapSize}
       />
 
       {/* ====================================================== */}
-      {/* 4. Front Fill Light                                  */}
-      {/* Brightens the dragon's face                          */}
+      {/* 4. Front Fill Light                                   */}
+      {/* Brightens the dragon's face                           */}
       {/* ====================================================== */}
       <pointLight position={[5, 5, 6]} intensity={0.8} color="#ffffff" />
 
-      {/* ====================================================== */}
-      {/* 5. Blue Rim Light                                    */}
-      {/* Gives cool edge highlight                            */}
-      {/* ====================================================== */}
-      <pointLight position={[-8, 5, -5]} intensity={0.5} color="#4f8cff" />
+      {!isMobile && (
+        <>
+          {/* ====================================================== */}
+          {/* 5. Blue Rim Light                                    */}
+          {/* Gives cool edge highlight                            */}
+          {/* ====================================================== */}
+          <pointLight position={[-8, 5, -5]} intensity={0.5} color="#4f8cff" />
 
-      {/* ====================================================== */}
-      {/* 6. Orange Rim Light                                  */}
-      {/* Gives warm cinematic look                            */}
-      {/* ====================================================== */}
-      <pointLight position={[8, 5, -5]} intensity={0.5} color="#ff8844" />
+          {/* ====================================================== */}
+          {/* 6. Orange Rim Light                                  */}
+          {/* Gives warm cinematic look                            */}
+          {/* ====================================================== */}
+          <pointLight position={[8, 5, -5]} intensity={0.5} color="#ff8844" />
 
-      {/* ====================================================== */}
-      {/* 7. Top Spotlight                                     */}
-      {/* Highlights dragon from above                         */}
-      {/* ====================================================== */}
-      <spotLight
-        position={[0, 10, 0]}
-        intensity={1.2}
-        angle={0.4}
-        penumbra={0.7}
-        castShadow
-      />
+          {/* ====================================================== */}
+          {/* 7. Top Spotlight                                     */}
+          {/* Highlights dragon from above                         */}
+          {/* ====================================================== */}
+          <spotLight
+            position={[0, 10, 0]}
+            intensity={1.2}
+            angle={0.4}
+            penumbra={0.7}
+          />
 
-      {/* ====================================================== */}
-      {/* HDR Environment                                      */}
-      {/* Makes materials look much more realistic             */}
-      {/* Try: city | studio | sunset | warehouse | dawn       */}
-      {/* ====================================================== */}
-      <Environment preset="dawn" />
+          {/* ====================================================== */}
+          {/* HDR Environment                                      */}
+          {/* Makes materials look much more realistic             */}
+          {/* Try: city | studio | sunset | warehouse | dawn       */}
+          {/* ====================================================== */}
+          <Environment preset="dawn" background={false} />
+        </>
+      )}
 
       {/* Dragon Model */}
       <group ref={group}>
@@ -137,76 +145,75 @@ const Dragon = ({ isMobile }: DragonProps) => {
       </group>
 
       {/* ====================================================== */}
-      {/* Ground Contact Shadow                                */}
-      {/* Soft realistic shadow under the dragon               */}
+      {/* Ground Contact Shadow                                 */}
+      {/* Soft realistic shadow under the dragon                */}
       {/* ====================================================== */}
       <ContactShadows
         position={[0, -2.8, 0]}
-        opacity={0.7}
+        opacity={isMobile ? 0.55 : 0.7}
         scale={25}
-        blur={3}
+        blur={isMobile ? 2 : 3}
         far={8}
+        resolution={isMobile ? 256 : 512}
       />
     </>
   );
 };
 
 const DragonCanvas = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width:500px)");
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsMobile(mediaQuery.matches);
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      setIsMobile(event.matches);
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange);
-    };
-  }, []);
+  const isMobile = useIsMobile(500);
+  const { ref, visible } = useCanvasVisibility("120px", true);
+  const [dpr, setDpr] = useState(isMobile ? 1.25 : 2);
 
   return (
-    <Canvas
-      shadows
-      dpr={[1, 2]}
-      camera={{
-        position: [0, 2, 9],
-        fov: 40,
-      }}
-      gl={{
-        preserveDrawingBuffer: true,
-        antialias: true,
-      }}
-    >
-      <Suspense fallback={<CanvasLoader />}>
-        {/* Camera Controls */}
-        <OrbitControls
-          autoRotate
-          autoRotateSpeed={0.5}
-          enableZoom
-          enablePan={false}
-          enableDamping
-          dampingFactor={0.08}
-          minDistance={7}
-          maxDistance={9}
-          minPolarAngle={Math.PI / 3}
-          maxPolarAngle={Math.PI / 1.7}
-        />
+    <div ref={ref} className="absolute inset-0">
+      <Canvas
+        shadows={!isMobile}
+        dpr={isMobile ? [1, 1.25] : [1, dpr]}
+        frameloop={visible ? "always" : "never"}
+        camera={{
+          position: [0, 2, 9],
+          fov: 40,
+        }}
+        gl={{
+          antialias: !isMobile,
+          powerPreference: "high-performance",
+          alpha: true,
+        }}
+      >
+        {!isMobile && (
+          <PerformanceMonitor
+            bounds={() => [40, 70]}
+            flipflops={3}
+            onDecline={() => setDpr(1)}
+            onIncline={() => setDpr(2)}
+          />
+        )}
 
-        <Dragon isMobile={isMobile} />
-      </Suspense>
+        <Suspense fallback={<CanvasLoader />}>
+          {/* Camera Controls */}
+          <OrbitControls
+            autoRotate={visible}
+            autoRotateSpeed={0.5}
+            enableZoom
+            enablePan={false}
+            enableDamping
+            dampingFactor={0.08}
+            minDistance={7}
+            maxDistance={9}
+            minPolarAngle={Math.PI / 3}
+            maxPolarAngle={Math.PI / 1.7}
+          />
 
-      <Preload all />
-    </Canvas>
+          <Dragon isMobile={isMobile} />
+        </Suspense>
+
+        <Preload all />
+      </Canvas>
+    </div>
   );
 };
 
-useGLTF.preload("./fatalis/scene.gltf");
+useGLTF.preload("./fatalis/scene-compressed.glb");
 
 export default DragonCanvas;

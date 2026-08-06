@@ -1,12 +1,12 @@
 import { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
+import { OrbitControls, useGLTF } from "@react-three/drei";
 import CanvasLoader from "../loader/Loader";
 
 
 
 const Earth = ({ isMobile }: { isMobile: boolean }) => {
-  const { scene } = useGLTF("./planet/scene.gltf");
+  const { scene } = useGLTF("./planet/scene-compressed.glb");
 
   return (
     <primitive
@@ -45,7 +45,7 @@ const EarthCanvas = () => {
         shadows
         frameloop="demand"
         dpr={[1, 2]}
-        gl={{ preserveDrawingBuffer: true }}
+        gl={{ powerPreference: "high-performance" }}
         className="w-full h-full"
         camera={{
           fov: isMobile ? 52 : 40,
@@ -64,13 +64,12 @@ const EarthCanvas = () => {
 
           <Earth isMobile={isMobile} />
 
-          <Preload all />
         </Suspense>
       </Canvas>
     </div>
   );
 };
 
-useGLTF.preload("./planet/scene.gltf");
+useGLTF.preload("./planet/scene-compressed.glb");
 
 export default EarthCanvas;

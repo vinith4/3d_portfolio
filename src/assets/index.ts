@@ -1,5 +1,5 @@
 import logo from "./logo.svg";
-import vinithkumar from "./vinithkumar.png";
+import vinithkumar from "./vinithkumar.webp";
 import backend from "./backend.png";
 import creator from "./creator.png";
 import mobile from "./mobile.png";
@@ -36,9 +36,9 @@ import starbucks from "./company/starbucks.png";
 import tesla from "./company/tesla.png";
 import virtusa from "./company/virtusa.png";
 
-import carrent from "./carrent.png";
-import jobit from "./jobit.png";
-import tripguide from "./tripguide.png";
+import carrent from "./carrent.webp";
+import jobit from "./jobit.webp";
+import tripguide from "./tripguide.webp";
 
 export {
   logo,
