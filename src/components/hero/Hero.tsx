@@ -1,6 +1,8 @@
+import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { styles } from "../../styles";
-import DragonCanvas from "../canvas/Dragon";
+
+const DragonCanvas = lazy(() => import("../canvas/Dragon"));
 
 const Hero = () => {
   return (
@@ -33,8 +35,10 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* 3D Dragon */}
-      <DragonCanvas />
+      {/* 3D Dragon — deferred so hero text paints first */}
+      <Suspense fallback={null}>
+        <DragonCanvas />
+      </Suspense>
 
       {/* Scroll Indicator */}
       <div className="absolute xs:bottom-8 bottom-12 w-full flex justify-center items-center">

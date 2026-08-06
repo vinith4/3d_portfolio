@@ -11,16 +11,20 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      if (scrollTop > 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const next = window.scrollY > 100;
+        setScrolled((prev) => (prev === next ? prev : next));
+        ticking = false;
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -45,6 +49,9 @@ const Navbar = () => {
           <img
             src={vinithkumar}
             alt="logo"
+            width={36}
+            height={36}
+            decoding="async"
             className="w-9 h-9 object-contain"
           />
           <p className="text-white text-[18px] font-bold cursor-pointer flex ">

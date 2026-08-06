@@ -15,7 +15,7 @@ interface SkillPosition extends TechNode {
 
 const DesktopSkillGraph = ({ technologies }: DesktopSkillGraphProps) => {
   const [activeSkill, setActiveSkill] = useState<string | null>(null);
-  const showDebug = true;
+  const showDebug = import.meta.env.DEV;
 
   /**
    * Static positions around the Dragon Core.
