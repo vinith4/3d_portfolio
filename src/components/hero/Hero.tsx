@@ -1,10 +1,13 @@
 import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { styles } from "../../styles";
+import { useIdleMount } from "../../utils/useIdleMount";
 
 const DragonCanvas = lazy(() => import("../canvas/Dragon"));
 
 const Hero = () => {
+  const dragonReady = useIdleMount();
+
   return (
     <section id="home" className="relative w-full h-screen mx-auto">
       <div
@@ -35,10 +38,12 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* 3D Dragon — deferred so hero text paints first */}
-      <Suspense fallback={null}>
-        <DragonCanvas />
-      </Suspense>
+      {/* 3D Dragon — mounted after idle so hero text paints and settles first */}
+      {dragonReady && (
+        <Suspense fallback={null}>
+          <DragonCanvas />
+        </Suspense>
+      )}
 
       {/* Scroll Indicator */}
       <div className="absolute xs:bottom-8 bottom-12 w-full flex justify-center items-center">
